@@ -1,5 +1,6 @@
-# picoTTS
-Minimum rework for it to work again. For development purposes only.
+Minimum rework for it to work again on Android. Speaks german, english, spanish, french, italian. For development purposes only.
+
+ssml parsing not implemented.
 
 Tested and working on:\
 Samsung s9 stock rom, Android 10\
