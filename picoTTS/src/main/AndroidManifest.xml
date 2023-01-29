@@ -32,7 +32,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:exported="false">
             <intent-filter>
-                <action android:name="android.speech.tts.androidEngineStruct.CHECK_TTS_DATA" />
+                <action android:name="android.speech.tts.engine.CHECK_TTS_DATA" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
