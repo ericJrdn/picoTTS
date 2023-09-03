@@ -82,27 +82,6 @@ const char *createPhonemeString(const char *s, int length) {
     return "\0";
 }
 
-const char *configureOutput(const char *s) {
-    std::string mystring(s), val;
-    const char *ret;
-
-    val="<speed level='"+std::to_string(currentRate)+"'>";
-    mystring.insert (0,val);
-
-    val="<pitch level='"+std::to_string(currentPitch)+"'>";
-    mystring.insert (0,val);
-
-    val="<volume level='"+std::to_string(currentVolume)+"'>";
-    mystring.insert (0,val);
-
-    mystring+="</speed>";
-    mystring+="</pitch>";
-    mystring+="</volume>";
-    ret = mystring.c_str();
-    return ret;
-}
-
-
 pico_Status initPicoSystem()
 {
     pico_Status status = PICO_OK;
@@ -211,13 +190,13 @@ bool checkLanguageInstallation(int languageIndex)
     strcpy(fileName, PICO_LINGWARE_PATH);
     strcat(fileName, availableLanguages[languageIndex].taFile);
     pFile = fopen(fileName, "r");
+    free(fileName);
     if (pFile == NULL) {
         return false;
     }
     else
     {
         fclose(pFile);
-        free(fileName);
         return true;
     }
 }
@@ -481,7 +460,23 @@ android_tts_result_t getProperty(void *eng, const char *property, char *value, s
 
 android_tts_result_t
 synthesizeText(void *eng, const char *text0, int8_t *buffer, size_t bufferSize, void *userdata) {
-    const char *text = configureOutput(text0);
+    std::string mystring(text0), val;
+
+    val="<speed level='"+std::to_string(currentRate)+"'>";
+    mystring.insert (0,val);
+
+    val="<pitch level='"+std::to_string(currentPitch)+"'>";
+    mystring.insert (0,val);
+
+    val="<volume level='"+std::to_string(currentVolume)+"'>";
+    mystring.insert (0,val);
+
+    mystring+="</speed>";
+    mystring+="</pitch>";
+    mystring+="</volume>";
+
+    const char *text = mystring.c_str();
+
     if (NULL==picoSynthDoneCBPtr)
     {
         ALOGE("picoSynthDoneCBPtr is NULL");
